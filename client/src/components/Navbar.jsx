@@ -3,6 +3,7 @@ import {
   LightModeOutlined,
   DarkModeOutlined,
   Menu as MenuIcon,
+  Search,
   SettingsOutlined,
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
@@ -16,6 +17,7 @@ import {
   Box,
   Typography,
   IconButton,
+  InputBase,
   Toolbar,
   Menu,
   MenuItem,
@@ -25,10 +27,7 @@ import {
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const displayUser = user ?? {
-    name: "Dashboard User",
-    occupation: "Team Lead",
-  };
+  const displayUser = user ?? {};
 
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
@@ -46,14 +45,20 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* LEFT SIDE */}
         <FlexBetween>
-          <IconButton onClick={() => setIsSidebarOpen?.(!isSidebarOpen)}>
+          <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <MenuIcon />
           </IconButton>
-          <Box>
-            <Typography variant="h4" fontWeight={700}>
-              Finsight
-            </Typography>
-          </Box>
+          <FlexBetween
+            backgroundColor={theme.palette.background.alt}
+            borderRadius="9px"
+            gap="3rem"
+            p="0.1rem 1.5rem"
+          >
+            <InputBase placeholder="Search..." />
+            <IconButton>
+              <Search />
+            </IconButton>
+          </FlexBetween>
         </FlexBetween>
 
         {/* RIGHT SIDE */}
