@@ -26,6 +26,32 @@ const Dashboard = () => {
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { data, isLoading } = useGetDashboardQuery();
 
+  const handleDownloadReports = () => {
+    if (!data?.transactions?.length) return;
+
+    const headers = ["ID", "User ID", "Created At", "# of Products", "Cost"];
+    const rows = data.transactions.map((t) => [
+      t._id,
+      t.userId,
+      t.createdAt,
+      t.products.length,
+      Number(t.cost).toFixed(2),
+    ]);
+    const csv = [headers, ...rows]
+      .map((row) => row.map((val) => `"${String(val).replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `finsight-transactions-${Date.now()}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const columns = [
     {
       field: "_id",
@@ -64,6 +90,8 @@ const Dashboard = () => {
 
         <Box>
           <Button
+            onClick={handleDownloadReports}
+            disabled={isLoading || !data?.transactions?.length}
             sx={{
               backgroundColor: theme.palette.secondary.light,
               color: theme.palette.background.alt,
