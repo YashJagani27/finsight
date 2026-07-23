@@ -27,7 +27,7 @@ const Forecast = () => {
 
     const forecastLine = {
       id: "Forecasted Sales",
-      color: theme.palette.secondary[600],
+      color: "#06d6a0",
       data: [
         { x: lastActual.month, y: lastActual.totalSales },
         ...forecast.map(({ month, predictedSales }) => ({
