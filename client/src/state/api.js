@@ -60,6 +60,14 @@ export const api = createApi({
       query: () => "predictions/sales",
       providesTags: ["Predictions"],
     }),
+    getCustomerSegments: build.query({
+      query: () => "predictions/segments",
+      providesTags: ["Predictions"],
+    }),
+    getProductClassification: build.query({
+      query: () => "predictions/classification",
+      providesTags: ["Predictions"],
+    }),
   }),
 });
 
@@ -74,4 +82,6 @@ export const {
   useGetUserPerformanceQuery,
   useGetDashboardQuery,
   useGetSalesForecastQuery,
+  useGetCustomerSegmentsQuery,
+  useGetProductClassificationQuery,
 } = api;
