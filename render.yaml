@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: finsight-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: MONGO_URL
+        sync: false

@@ -39,6 +39,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 /* ROUTES */
+app.get("/", (req, res) =>
+  res.send("Finsight API is running. Try /general/dashboard or /predictions/sales.")
+);
 app.use("/client", clientRoutes);
 app.use("/general", generalRoutes);
 app.use("/management", managementRoutes);
