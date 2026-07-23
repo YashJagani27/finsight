@@ -48,19 +48,22 @@ app.use("/management", managementRoutes);
 app.use("/sales", salesRoutes);
 app.use("/predictions", predictionsRoutes);
 
-/* MONGOOSE SETUP */
+/* SETUP */
 const PORT = process.env.PORT || 9000;
+
+// Start the web server right away so the platform sees an open port,
+// then connect to MongoDB in the background.
+app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-
-    /* ONLY ADD DATA ONE TIME */
-    // AffiliateStat.insertMany(dataAffiliateStat);
-    // OverallStat.insertMany(dataOverallStat);
-    // Product.insertMany(dataProduct);
-    // ProductStat.insertMany(dataProductStat);
-    // Transaction.insertMany(dataTransaction);
-    // User.insertMany(dataUser);
-  })
+  .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log(`${error} did not connect`));
+
+/* ONLY ADD DATA ONE TIME (already seeded — kept for reference) */
+// AffiliateStat.insertMany(dataAffiliateStat);
+// OverallStat.insertMany(dataOverallStat);
+// Product.insertMany(dataProduct);
+// ProductStat.insertMany(dataProductStat);
+// Transaction.insertMany(dataTransaction);
+// User.insertMany(dataUser);
